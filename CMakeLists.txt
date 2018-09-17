@@ -14,14 +14,14 @@ generate_dynamic_reconfigure_options(
 
 catkin_package(
         INCLUDE_DIRS include
-        LIBRARIES lpf_ros
-        #  CATKIN_DEPENDS other_catkin_pkg
-        # DEPENDS system_lib
+        LIBRARIES ${PROJECT_NAME}
+         CATKIN_DEPENDS dynamic_reconfigure roscpp
 )
 
 include_directories(
         include
         ${catkin_INCLUDE_DIRS}
+        ${dynamic_reconfigure_PACKAGE_PATH}/cmake/cfgbuild.cmake
 )
 
 set(
