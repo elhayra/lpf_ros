@@ -46,15 +46,13 @@ add_dependencies(
         ${catkin_EXPORTED_TARGETS}
 )
 
-## Declare a C++ executable
-## With catkin_make all packages are built within a single CMake context
-## The recommended prefix ensures that target names across packages don't collide
+# Declare a C++ executable
+# With catkin_make all packages are built within a single CMake context
+# The recommended prefix ensures that target names across packages don't collide
 add_executable(
         ${PROJECT_NAME}_node
         ${PROJECT_FILES}
 )
-
-
 
 # make sure configure headers are built before any node using them
 add_dependencies(${PROJECT_NAME}_node ${PROJECT_NAME}_gencfg)

@@ -77,5 +77,4 @@ namespace lpf
         filtered_pub_ = nh.advertise<std_msgs::Float64>("lpf/filtered_data", 1000);
         raw_pub_ = nh.advertise<std_msgs::Float64>("lpf/raw_data", 1000);
     }
-
 }
