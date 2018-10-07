@@ -26,7 +26,7 @@ include_directories(
 
 set(
         PROJECT_FILES
-        src/lpf_ros_node.cpp
+        #src/test_node.cpp
         src/lpf_ros.cpp
         include/${PROJECT_NAME}/lpf_ros.h
 )
@@ -49,31 +49,36 @@ add_dependencies(
 # Declare a C++ executable
 # With catkin_make all packages are built within a single CMake context
 # The recommended prefix ensures that target names across packages don't collide
-add_executable(
-        ${PROJECT_NAME}_node
-        ${PROJECT_FILES}
-)
+#add_executable(
+#        ${PROJECT_NAME}_node
+#        ${PROJECT_FILES}
+#)
 
 # make sure configure headers are built before any node using them
-add_dependencies(${PROJECT_NAME}_node ${PROJECT_NAME}_gencfg)
+#add_dependencies(${PROJECT_NAME}_node ${PROJECT_NAME}_gencfg)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} )
+#add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} )
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(${PROJECT_NAME}_node
-        ${catkin_LIBRARIES}
-        )
+#target_link_libraries(${PROJECT_NAME}_node
+#        ${catkin_LIBRARIES}
+#        )
+
+if (CATKIN_ENABLE_TESTING)
+    catkin_add_gtest(test_node test/test_node.cpp  ${PROJECT_FILES})
+    target_link_libraries(test_node ${catkin_LIBRARIES})
+endif()
 
 ## Mark executables and/or libraries for installation
-install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_node
-        ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-        LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-        RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-        )
-
-## Mark cpp header files for installation
+#install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_node
+#        ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#        LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#        RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+#        )
+#
+### Mark cpp header files for installation
 install(DIRECTORY include/${PROJECT_NAME}/
         DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
         FILES_MATCHING PATTERN "*.h"

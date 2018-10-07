@@ -26,6 +26,14 @@ namespace lpf
         // publish filetered and raw data
         ros::Publisher filtered_pub_, raw_pub_;
 
+        void validateAlpha(double alpha);
+
+        void registerDynamicParamCallback(ros::NodeHandle& nh);
+
+        void onDynamicRequest(lpf_ros::LpfConfig &config, uint32_t level);
+
+        void publishData(ros::NodeHandle& nh);
+
     public:
 
         Lpf();
@@ -48,6 +56,8 @@ namespace lpf
 
         void setAlpha(double alpha);
 
+        double getAlpha() { return alpha_; }
+
         /*
          * pre: 0 < alpha < 1
          * post: low pass filtered data
@@ -56,14 +66,6 @@ namespace lpf
          */
 
         double filter(double raw_input);
-
-        void validateAlpha(double alpha);
-
-        void registerDynamicParamCallback(ros::NodeHandle& nh);
-
-        void onDynamicRequest(lpf_ros::LpfConfig &config, uint32_t level);
-
-        void publishData(ros::NodeHandle& nh);
     };
 
 }
