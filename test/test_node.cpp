@@ -51,19 +51,61 @@ TEST(ValueUpdate, AlphaUpdate)
     ASSERT_EQ(0.5, filter.getAlpha());
 }
 
-TEST(Filter, Lpf)
+TEST(Filter, LpfNoThresh)
 {
+    filter.resetData();
     filter.setAlpha(0.1);
-    double alpha;
+    double filtered_data = 0;
 
-    alpha = filter.filter(100);
-    EXPECT_EQ(alpha, 10);
-    alpha = filter.filter(100);
-    EXPECT_EQ(alpha, 19);
-    alpha = filter.filter(100);
-    EXPECT_EQ(alpha, 27.1);
-    alpha = filter.filter(200);
-    EXPECT_EQ(alpha, 44.39);
+    filtered_data = filter.filter(100);
+    EXPECT_EQ(filtered_data, 10);
+    filtered_data = filter.filter(100);
+    EXPECT_EQ(filtered_data, 19);
+    filtered_data = filter.filter(100);
+    EXPECT_EQ(filtered_data, 27.1);
+    filtered_data = filter.filter(200);
+    EXPECT_EQ(filtered_data, 44.39);
+}
+
+TEST(Filter, LpfWithThresh)
+{
+    filter.resetData();
+    filter.setAlpha(0.1);
+    double filtered_data = 0;
+
+    filtered_data = filter.filter(0.001, 0.001);
+    EXPECT_EQ(filtered_data, 0);
+
+    filter.resetData();
+    filtered_data = filter.filter(0.001, 0.00001);
+    EXPECT_EQ(filtered_data, 0.0001);
+}
+
+TEST(Filter, LpfNegative)
+{
+    filter.resetData();
+    filter.setAlpha(0.1);
+    double filtered_data = 0;
+
+    filtered_data = filter.filter(-100);
+    EXPECT_EQ(filtered_data, -10);
+    filtered_data = filter.filter(-100);
+    EXPECT_EQ(filtered_data, -19);
+    filtered_data = filter.filter(-100);
+    EXPECT_EQ(filtered_data, -27.1);
+    filtered_data = filter.filter(-200);
+    EXPECT_EQ(filtered_data, -44.39);
+
+    filter.resetData();
+    filter.setAlpha(0.1);
+    filtered_data = 0;
+
+    filtered_data = filter.filter(-0.001, 0.001);
+    EXPECT_EQ(filtered_data, 0);
+
+    filter.resetData();
+    filtered_data = filter.filter(-0.001, 0.00001);
+    EXPECT_EQ(filtered_data, -0.0001);
 }
 
 int main(int argc, char **argv)

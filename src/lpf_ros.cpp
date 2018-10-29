@@ -53,6 +53,18 @@ namespace lpf
         return filtered_data_;
     }
 
+    double Lpf::filter(double raw_input, double zero_thresh)
+    {
+        if (zero_thresh <= 0 || zero_thresh >= 1)
+            throw std::invalid_argument("invalid zero_thresh value. "
+                                        "valid values are 0 < zero_thresh < 1");
+
+        filter(raw_input);
+        if (fabs(filtered_data_) < zero_thresh)
+            resetData();
+        return filtered_data_;
+    }
+
     void Lpf::validateAlpha(double alpha)
     {
         if (alpha < 0 || alpha > 1)

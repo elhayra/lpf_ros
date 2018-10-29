@@ -66,6 +66,19 @@ namespace lpf
          */
 
         double filter(double raw_input);
+
+        /*
+         * pre: 0 < alpha < 1
+         * post: low pass filtered data
+         * param: raw_input: raw data to filter
+         * param: zero_thresh: if fabs(filtered_data) < zero_thresh:
+         *        filtered_data = 0 (round tiny numbers to 0)
+         * this function need to be called in loop for each raw input
+         */
+
+        double filter(double raw_input, double zero_thresh);
+
+        void resetData() { filtered_data_ = 0.0; }
     };
 
 }
