@@ -18,10 +18,11 @@ namespace lpf
     {
     private:
 
-        boost::shared_ptr<dynamic_reconfigure::Server<lpf_ros::LpfConfig> > server;
+        boost::shared_ptr<dynamic_reconfigure::Server<lpf_ros::LpfConfig>> server;
 
         double alpha_ = 0;
         double filtered_data_ = 0;
+        bool print_info_ = false;
 
         // publish filetered and raw data
         ros::Publisher filtered_pub_, raw_pub_;
@@ -54,9 +55,13 @@ namespace lpf
          */
         void init(const ros::NodeHandle &nh, double alpha);
 
+        void init(const ros::NodeHandle &nh, double alpha, double init_value);
+
         void setAlpha(double alpha);
 
         double getAlpha() { return alpha_; }
+
+        void printInfo(bool flag) { print_info_ = flag; }
 
         /*
          * pre: 0 < alpha < 1
